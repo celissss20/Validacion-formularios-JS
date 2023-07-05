@@ -1,9 +1,17 @@
-export function valida(input) {
+const inputs = document.querySelectorAll("input");
+
+inputs.forEach((input) => {
+  input.addEventListener("blur", (input) => {
+    valida(input.target);
+  });
+});
+
+function valida(input) {
     const tipoDeInput = input.dataset.tipo;
     if (validadores[tipoDeInput]) {
       validadores[tipoDeInput](input);
     }
-  
+
     if (input.validity.valid) {
       input.parentElement.classList.remove("input-container--invalid");
       input.parentElement.querySelector(".input-message-error").innerHTML = "";
@@ -13,6 +21,8 @@ export function valida(input) {
         mostrarMensajeDeError(tipoDeInput, input);
     }
   }
+
+
   
   const tipoDeErrores = [
     "valueMissing",
